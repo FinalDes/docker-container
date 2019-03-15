@@ -13,8 +13,9 @@ RUN curl "https://install.meteor.com/" | sh
 FROM ubuntu:latest as meteor
 RUN groupadd --gid 1000 meteor \
   && useradd --uid 1000 --gid meteor --shell /bin/bash --create-home meteor
+ENV PATH=$PATH:/home/meteor/.meteor
 WORKDIR /home/meteor
 USER meteor
 COPY --from=setup /home/meteor/. .
-ENTRYPOINT [".meteor/meteor"]
+ENTRYPOINT ["meteor"]
 CMD ["--version"]
