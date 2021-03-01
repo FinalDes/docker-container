@@ -1,9 +1,16 @@
 services:
   ansible:
     image: finaldes/ansible
+    command: sh -c "while true; do sleep 12 ; echo 'foreground'; done"
     build:
       dockerfile: Dockerfile
+    environment:
+      ANSIBLE_FORCE_COLOR: '1'
     volumes:
       - type: bind
         source: /var/run/docker.sock
         target: /var/run/docker.sock
+      - type: bind
+        source: /sys/fs/cgroup
+        target: /sys/fs/cgroup
+        read_only: true
